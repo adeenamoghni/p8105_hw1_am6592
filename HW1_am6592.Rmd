@@ -1,0 +1,28 @@
+---
+title: "HW1"
+output: github_document
+---
+
+```{r setup, echo = FALSE, message = FALSE}
+
+library(tidyverse) #read csv
+```
+
+## Problem 1
+
+```{r include = FALSE}
+
+data("penguins", package = "palmerpenguins")
+penguins_df = penguins
+```
+
+The pegnuins dataset is sorted described by **`r ncol(penguins_df)`** variables, which are: **`r colnames(penguins_df)`**. This dataset is **`r nrow(penguins_df)`** rows by **`r ncol(penguins_df)`** columns. The average flipper length of the penguins in this dataset is **`r mean(penguins_df[["flipper_length_mm"]], na.rm = TRUE)`** mm.
+
+```{r}
+plot_penguins_df = tibble (
+  x = penguins_df$bill_length_mm,
+  y = penguins_df$flipper_length_mm
+)
+ggplot (plot_penguins_df, aes(x = penguins_df$bill_length_mm, y = penguins_df$flipper_length_mm, col=penguins_df$species)) + geom_point() + labs(x = "Bill Length (mm)", y = "Flipper Length (mm)", title = "Penguin Flipper Length vs Bill Length (in mm)", color = "Penguin Species") +  theme(plot.title = element_text(hjust = 0.5))
+  
+```
