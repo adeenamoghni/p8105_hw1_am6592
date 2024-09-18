@@ -30,5 +30,7 @@ plot_penguins_df = tibble (
   y = pull(penguins, flipper_length_mm)
 )
 ggplot (plot_penguins_df, aes(x = pull(penguins, bill_length_mm), y = pull(penguins, flipper_length_mm), col=penguins_df$species)) + geom_point() + labs(x = "Bill Length (mm)", y = "Flipper Length (mm)", title = "Penguin Flipper Length vs Bill Length (in mm)", color = "Penguin Species") +  theme(plot.title = element_text(hjust = 0.5))
+
+ggsave(filename = "flipper_vs_bill_plot.png")
   
 ```
