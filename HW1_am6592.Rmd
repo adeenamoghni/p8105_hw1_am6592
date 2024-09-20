@@ -13,12 +13,12 @@ library(tidyverse) #read csv
 ```{r include = FALSE}
 
 data("penguins", package = "palmerpenguins")
-penguins_df = penguins
+
 ```
 
 ***Penguin Dataset Description***
 
-The penguins dataset is described by **`r ncol(penguins_df)`** variables, which are: **`r colnames(penguins_df)`**. This dataset is **`r nrow(penguins_df)`** rows by **`r ncol(penguins_df)`** columns. The average flipper length of the penguins in this dataset is **`r mean(pull(penguins, flipper_length_mm), na.rm = TRUE)`** mm.
+The penguins dataset is described by **`r ncol(penguins)`** variables, which are: **`r colnames(penguins)`**. This dataset is **`r nrow(penguins)`** rows by **`r ncol(penguins)`** columns. The average flipper length of the penguins in this dataset is **`r mean(pull(penguins, flipper_length_mm), na.rm = TRUE)`** mm.
 
 ***Penguin Dataset Scatter Plot***
 
@@ -29,7 +29,7 @@ plot_penguins_df = tibble (
   x = pull(penguins, bill_length_mm),
   y = pull(penguins, flipper_length_mm)
 )
-ggplot (plot_penguins_df, aes(x = pull(penguins, bill_length_mm), y = pull(penguins, flipper_length_mm), col=penguins_df$species)) + geom_point() + labs(x = "Bill Length (mm)", y = "Flipper Length (mm)", title = "Penguin Flipper Length vs Bill Length (in mm)", color = "Penguin Species") +  theme(plot.title = element_text(hjust = 0.5))
+ggplot (plot_penguins_df, aes(x = pull(penguins, bill_length_mm), y = pull(penguins, flipper_length_mm), col=pull(penguins, species))) + geom_point() + labs(x = "Bill Length (mm)", y = "Flipper Length (mm)", title = "Penguin Flipper Length vs Bill Length (in mm)", color = "Penguin Species") +  theme(plot.title = element_text(hjust = 0.5))
 
 ggsave(filename = "flipper_vs_bill_plot.png")
   
@@ -63,6 +63,6 @@ logi_to_num = as.numeric(pull(question2_df,vector_logical))
 char_to_num = as.numeric(pull(question2_df,vector_char))
 fact_to_num = as.numeric(pull(question2_df,vector_factor))
 ```
-The logical and factor vectors are able to convert to numeric, but the character vector gives the warning: **NAs introduced by coercion**. It makes sense for the logical vector to have the ability to convert to numeric, as there are only two values (true and false) that can be assigned a numeric value (1 and 0, respectively). For the same reason, factor vectors are able to convert to numeric by assigning a number to each of its levels. However, character vectors don't necessarily have a "pattern" the way the other vector types do, which is why it can't be converted to a numeric vector.
+The logical and factor vectors are able to convert to numeric, but the character vector gives the warning: **NAs introduced by coercion**. It makes sense for the logical vector to have the ability to convert to numeric, as there are only two values (true and false) that can be assigned a numeric value (1 and 0, respectively). For the same reason, factor vectors are able to convert to numeric by assigning a number to each of the levels. However, character vectors don't necessarily have a "pattern" the way the other vector types do, which is why it can't be converted to a numeric vector.
 
 This lines up with what we have seen when trying to take the mean of these vector types: logical vectors have an average because it will always assign 0 to false and 1 to true, so the average can tell you information on how many trues vs falses are contained within the vector (e.g. if the average is .9, the vector contains mostly trues). Character vectors are unable to convert to numeric vectors and thus we get an error when trying to take its mean. Factor vectors, although able to convert to numeric based on numbers assigned to each level, these numbers are arbitrary and taking the mean based on these values won't disclose any useful information, thus we get an error when trying to take its mean.
